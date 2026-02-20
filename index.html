@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News & Activities Feed</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: transparent;
+  }
+  
+  /* ส่วนหัวของข่าว */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+  .see-all {
+    font-size: 14px;
+    color: #0b7a42; /* สีเขียวองค์กร */
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .see-all:hover {
+    text-decoration: underline;
+  }
+
+  /* เลย์เอาต์หลัก แบ่งซ้าย-ขวา (อัตราส่วนประมาณ 55% : 45%) */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 25px;
+    align-items: stretch;
+  }
+
+  /* ================================
+     ฝั่งซ้าย: แบนเนอร์ใหญ่ 1 อัน
+     ================================ */
+  .highlight-item {
+    display: block;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    background: white;
+  }
+  .highlight-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  .highlight-img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: contain; /* หรือใช้ cover ถ้าอยากให้รูปเต็มกรอบพอดี */
+    display: block;
+  }
+
+  /* ================================
+     ฝั่งขวา: ลิสต์ข่าวเล็ก 3 อัน
+     ================================ */
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  .news-item {
+    display: flex;
+    text-decoration: none;
+    color: #333;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+  .news-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  .news-image-container {
+    width: 130px;
+    min-width: 130px;
+    height: 85px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 15px;
+  }
+  .news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .news-item:hover .news-image {
+    transform: scale(1.08); /* ซูมรูปตอนเอาเมาส์ชี้ */
+  }
+  .news-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .news-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+    color: #222;
+    /* ตัดคำถ้ายาวเกิน 2 บรรทัด */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s;
+  }
+  .news-item:hover .news-title {
+    color: #0b7a42;
+  }
+  .news-meta {
+    font-size: 11px;
+    color: #777;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* จัดเรียงใหม่เมื่อดูในมือถือจอเล็ก */
+  @media (max-width: 768px) {
+    .main-grid {
+      grid-template-columns: 1fr; /* เปลี่ยนเป็น 1 คอลัมน์ */
+    }
+    .highlight-img {
+      min-height: auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="section-header">
+    <h2 class="section-title">ข่าวสาร</h2>
+    <a href="https://haadthipo365.sharepoint.com/sites/RMCGConnect/_layouts/15/news.aspx?title=%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3&newsSource=1&instanceId=81c50e1f-3102-4746-8bf1-317e2332d05a&webPartId=8c88f208-6c77-4bdb-86a0-0c47b4316588&serverRelativeUrl=/sites/RMCGConnect/SitePages/OrganizationHome.aspx&pagesListId=4f686553-2f18-41ee-9de1-9169b0bf0eb1" target="_top" class="see-all">ดูทั้งหมด &rarr;</a>
+  </div>
+
+  <div class="main-grid">
+    
+    <div class="highlight-section">
+      <a href="https://haadthipo365.sharepoint.com/:u:/s/RMCGConnect/IQCuwLK1zwVKQLLpVrZvrcwFAcRpIe4Q_dPOIIfBFbn1o-8?e=RojpRs" target="_top" class="highlight-item">
+        <img src="blob:https://haadthipo365.sharepoint.com/160cbb80-78eb-496a-8117-04f9dc5a2a4c" class="highlight-img" alt="แบนเนอร์กิจกรรม">
+      </a>
+    </div>
+
+    <div class="news-list">
+      
+      <a href="https://haadthipo365.sharepoint.com/:u:/r/sites/RMCGConnect/SitePages/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-CG%26Risk-Exhibition-Day.aspx?csf=1&web=1&share=IQCEK0pYGDJsRYW2M0asGXx5AfbVKYQ49ifRseLw5zPvUw8&e=aKZzE6" target="_top" class="news-item">
+        <div class="news-image-container">
+          <img src="blob:https://haadthipo365.sharepoint.com/34ed7b33-c98d-40f2-8c1a-f6c57df6d815" class="news-image" alt="ข่าวที่ 1">
+        </div>
+        <div class="news-content">
+          <h3 class="news-title">กิจกรรม CG&Risk Exhibition Day</h3>
+          <div class="news-meta">
+            <span>เมื่อวันที่ 30 มกราคม 2569...</span>
+            <span>📅 6 ก.พ. 2569 | 👁️ เข้าชม 8 ครั้ง</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://haadthipo365.sharepoint.com/:u:/r/sites/RMCGConnect/SitePages/%E0%B8%AD%E0%B8%9A%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%81%E0%B8%A3-%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B3%E0%B8%9B%E0%B8%B5-2569.aspx?csf=1&web=1&share=IQDrzw8x30G1T7_U6hJvChMTATsomOguHQEQsd1sR8DllJY&e=vbulM5" target="_top" class="news-item">
+        <div class="news-image-container">
+          <img src="blob:https://haadthipo365.sharepoint.com/d234439e-4b42-47cb-932e-689304c1ad94" class="news-image" alt="ข่าวที่ 2">
+        </div>
+        <div class="news-content">
+          <h3 class="news-title">ประชุมเชิงปฏิบัติการเรื่อง "การบริหารความเสี่ยงองค์กร ประจำปี 2569"</h3>
+          <div class="news-meta">
+            <span>วันที่ 21 มกราคม 2569...</span>
+            <span>📅 23 ม.ค. 2569 | 👁️ เข้าชม 11 ครั้ง</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="ใส่ลิงก์ปลายทางข่าวที่3" target="_top" class="news-item">
+        <div class="news-image-container">
+          <img src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80&w=400&auto=format&fit=crop" class="news-image" alt="ข่าวที่ 3">
+        </div>
+        <div class="news-content">
+          <h3 class="news-title">CG Know-How 2026 EP1 Corporate Governance (CG) มีความสำคัญอย่างไร</h3>
+          <div class="news-meta">
+            <span>ความสำคัญของ CG ต่อองค์กร...</span>
+            <span>📅 23 ม.ค. 2569 | 👁️ เข้าชม 6 ครั้ง</span>
+          </div>
+        </div>
+      </a>
+
+    </div> </div> </body>
+</html>
