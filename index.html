@@ -60,37 +60,70 @@
   }
 
   /* ================================
-     ฝั่งซ้าย: แบนเนอร์ใหญ่ 1 อัน
+     ฝั่งซ้าย: แบนเนอร์ใหญ่ 1 อัน (อัปเดตเพิ่ม Text)
      ================================ */
   .highlight-section {
     height: 100%;
   }
   .highlight-item {
-    display: block;
-    position: relative; /* ล็อคกรอบไม่ให้ขยับ */
-    height: 100%; /* บังคับให้สูงเท่ากับฝั่งขวาเป๊ะๆ */
+    display: flex;
+    flex-direction: column; /* เรียงจากบนลงล่าง */
+    position: relative;
+    height: 100%; 
     min-height: 330px; 
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    background: #f8f9fa;
+    background: white; /* เปลี่ยนพื้นหลังการ์ดเป็นสีขาว */
+    border: 1px solid #f0f0f0;
+    text-decoration: none;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
   }
   .highlight-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(11, 122, 66, 0.12);
   }
+  
+  /* ส่วนของรูปภาพฝั่งซ้าย */
+  .highlight-img-wrapper {
+    flex-grow: 1; /* ให้รูปขยายเต็มพื้นที่ที่เหลือ */
+    position: relative;
+    background: #f8f9fa; /* สีเทาอ่อนรองพื้นหลังรูป */
+    width: 100%;
+    overflow: hidden;
+  }
   .highlight-img {
-    position: absolute; /* เปลี่ยนมาใช้ Absolute เพื่อไม่ให้รูปดันกรอบให้ใหญ่ขึ้น */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* บังคับย่อรูปให้พอดีกรอบ */
+    object-fit: contain; 
     transition: transform 0.6s ease;
   }
   .highlight-item:hover .highlight-img {
     transform: scale(1.02);
+  }
+
+  /* ส่วนของข้อความฝั่งซ้าย (มาใหม่) */
+  .highlight-content {
+    padding: 16px 20px;
+    background: white;
+    border-top: 1px solid #f0f0f0;
+  }
+  .highlight-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #1f2937;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s;
+  }
+  .highlight-item:hover .highlight-title {
+    color: #0b7a42;
   }
 
   /* ================================
@@ -114,7 +147,7 @@
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
-    flex: 1; /* จัดช่องไฟให้สวยงาม */
+    flex: 1; 
     align-items: center;
   }
   .news-item::before {
@@ -199,7 +232,7 @@
       grid-template-columns: 1fr;
     }
     .highlight-item {
-      min-height: 300px; 
+      min-height: 380px; 
     }
   }
 </style>
@@ -215,7 +248,16 @@
     
     <div class="highlight-section">
       <a href="https://haadthipo365.sharepoint.com/:u:/s/RMCGConnect/IQCuwLK1zwVKQLLpVrZvrcwFAcRpIe4Q_dPOIIfBFbn1o-8?e=RojpRs" target="_top" class="highlight-item">
-        <img src="banner.png" class="highlight-img" alt="แบนเนอร์กิจกรรม">
+        <div class="highlight-img-wrapper">
+          <img src="banner.png" class="highlight-img" alt="แบนเนอร์กิจกรรม">
+        </div>
+        <div class="highlight-content">
+          <h3 class="highlight-title">กิจกรรม Love talk sharing เช็ก Risk ของหัวใจ</h3>
+          <div class="news-meta">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>14 กุมภาพันธ์ 2569</span>
+          </div>
+        </div>
       </a>
     </div>
 
@@ -247,7 +289,7 @@
         </div>
       </a>
 
-      <a href="https://haadthipo365.sharepoint.com/:i:/s/RMCGConnect/IQC9tYqBWbISRrhThpmrmkU-AQ2DuHb6Dv5TL0sYPk5Hrqw?e=wCFPQd" target="_top" class="news-item">
+      <a href="#" target="_top" class="news-item">
         <div class="news-image-container">
           <img src="news3.png" class="news-image" alt="ข่าวที่ 3">
         </div>
