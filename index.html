@@ -3,66 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>News Feed Grid</title>
+<title>Dynamic News Feed Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Kanit', sans-serif;
     margin: 0;
     padding: 20px 10px;
     background-color: transparent;
   }
   
-  /* ส่วนหัวข้อตรงกลาง */
-  .section-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .section-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #333;
-    margin: 0;
-  }
+  .section-header { text-align: center; margin-bottom: 40px; }
+  .section-title { font-size: 26px; font-weight: 700; color: #333; margin: 0; }
 
   /* เลย์เอาต์แบบ 4 คอลัมน์ */
   .news-grid {
     display: grid;
-    /* จัดแบบอัตโนมัติ: ถ้าจอกว้างจะเป็น 4 คอลัมน์ ถ้าย่อจอจะลดเหลือ 2 หรือ 1 */
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  /* การ์ดข่าวแต่ละอัน */
   .news-card {
     display: flex;
     flex-direction: column;
     text-decoration: none;
     transition: transform 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.6s forwards;
   }
-  .news-card:hover {
-    transform: translateY(-6px); /* เด้งขึ้นตอนเอาเมาส์ชี้ */
-  }
+  @keyframes fadeIn { to { opacity: 1; } }
 
-  /* ส่วนรูปภาพและวันที่ */
+  .news-card:hover { transform: translateY(-6px); }
+
   .news-image-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3; /* ล็อคสัดส่วนรูปภาพให้เท่ากันทุกกรอบ */
+    aspect-ratio: 4 / 3;
     overflow: hidden;
-    border-radius: 8px; /* ขอบโค้งมน */
+    border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   }
-  .news-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  .news-card:hover .news-image {
-    transform: scale(1.05); /* ซูมรูปภาพ */
-  }
+  .news-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .news-card:hover .news-image { transform: scale(1.05); }
 
-  /* กล่องวันที่ซ้อนทับรูปภาพ (แบบในภาพต้นฉบับ) */
   .news-date {
     position: absolute;
     bottom: 0;
@@ -72,49 +57,39 @@
     font-size: 13px;
     font-weight: 700;
     padding: 8px 16px;
-    border-top-right-radius: 8px; /* มุมโค้งมนเฉพาะด้านบนขวา */
+    border-top-right-radius: 12px;
   }
 
-  /* ส่วนข้อความชื่อข่าว */
   .news-title {
     margin-top: 16px;
     font-size: 16px;
     font-weight: 600;
     line-height: 1.5;
     color: #222;
-    /* ตัดคำถ้ายาวเกิน 3 บรรทัด */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     transition: color 0.2s;
   }
-  .news-card:hover .news-title {
-    color: #0b7a42; /* เปลี่ยนสีตอนชี้ */
-  }
+  .news-card:hover .news-title { color: #0b7a42; }
 
-  /* ปุ่มอ่านเพิ่มเติม (ด้านล่าง) */
-  .button-container {
-    text-align: center;
-    margin-top: 40px;
-  }
+  .button-container { text-align: center; margin-top: 40px; }
   .btn-read-more {
     display: inline-block;
-    background: linear-gradient(to right, #6ab023, #0b7a42); /* ไล่สีเขียวให้ดูมีมิติ */
+    background: linear-gradient(to right, #6ab023, #0b7a42);
     color: white;
     font-size: 16px;
     font-weight: bold;
     text-decoration: none;
     padding: 12px 36px;
-    border-radius: 30px; /* ปุ่มทรงแคปซูล */
+    border-radius: 30px;
     box-shadow: 0 4px 12px rgba(11, 122, 66, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.2s;
   }
-  .btn-read-more:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(11, 122, 66, 0.4);
-  }
+  .btn-read-more:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(11, 122, 66, 0.4); }
 
+  #loading { text-align: center; font-size: 18px; color: #666; padding: 50px; }
 </style>
 </head>
 <body>
@@ -123,45 +98,55 @@
     <h2 class="section-title">อัพเดทข่าวสารและกิจกรรมล่าสุด</h2>
   </div>
 
-  <div class="news-grid">
-    
-    <a href="https://haadthipo365.sharepoint.com/:u:/s/RMCGConnect/IQCuwLK1zwVKQLLpVrZvrcwFAcRpIe4Q_dPOIIfBFbn1o-8?e=RojpRs" target="_top" class="news-card">
-      <div class="news-image-wrapper">
-        <img src="banner.png" class="news-image" alt="ข่าวที่ 1">
-        <div class="news-date">14 ก.พ. 2569</div>
-      </div>
-      <h3 class="news-title">กิจกรรม Love talk sharing เช็ก Risk ของหัวใจ</h3>
-    </a>
-
-    <a href="https://haadthipo365.sharepoint.com/:u:/r/sites/RMCGConnect/SitePages/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-CG%26Risk-Exhibition-Day.aspx?csf=1&web=1&share=IQCEK0pYGDJsRYW2M0asGXx5AfbVKYQ49ifRseLw5zPvUw8&e=aKZzE6" target="_top" class="news-card">
-      <div class="news-image-wrapper">
-        <img src="news1.png" class="news-image" alt="ข่าวที่ 2">
-        <div class="news-date">6 ก.พ. 2569</div>
-      </div>
-      <h3 class="news-title">กิจกรรม CG&Risk Exhibition Day</h3>
-    </a>
-
-    <a href="https://haadthipo365.sharepoint.com/:u:/r/sites/RMCGConnect/SitePages/%E0%B8%AD%E0%B8%9A%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%81%E0%B8%A3-%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B3%E0%B8%9B%E0%B8%B5-2569.aspx?csf=1&web=1&share=IQDrzw8x30G1T7_U6hJvChMTATsomOguHQEQsd1sR8DllJY&e=vbulM5" target="_top" class="news-card">
-      <div class="news-image-wrapper">
-        <img src="news2.png" class="news-image" alt="ข่าวที่ 3">
-        <div class="news-date">23 ม.ค. 2569</div>
-      </div>
-      <h3 class="news-title">ประชุมเชิงปฏิบัติการเรื่อง "การบริหารความเสี่ยงองค์กร ประจำปี 2569"</h3>
-    </a>
-
-    <a href="https://haadthipo365.sharepoint.com/:i:/s/CG/IQCVHOR6KnAsQ4o_1dzF7r6hAVRCYxdODibblS6MEvd7bc8?e=bjmldD" target="_top" class="news-card">
-      <div class="news-image-wrapper">
-        <img src="news3.png" class="news-image" alt="ข่าวที่ 4">
-        <div class="news-date">23 ม.ค. 2569</div>
-      </div>
-      <h3 class="news-title">CG Know-How 2026 EP1 Corporate Governance (CG) มีความสำคัญอย่างไร</h3>
-    </a>
-
-  </div>
+  <div id="loading">กำลังโหลดข่าวสารล่าสุด...</div>
+  <div class="news-grid" id="news-container"></div>
 
   <div class="button-container">
-    <a href="https://haadthipo365.sharepoint.com/sites/RMCGConnect/_layouts/15/news.aspx?title=%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3&newsSource=1&instanceId=81c50e1f-3102-4746-8bf1-317e2332d05a&webPartId=8c88f208-6c77-4bdb-86a0-0c47b4316588&serverRelativeUrl=/sites/RMCGConnect/SitePages/OrganizationHome.aspx&pagesListId=4f686553-2f18-41ee-9de1-9169b0bf0eb1" target="_top" class="btn-read-more">อ่านข้อมูลเพิ่มเติม</a>
+    <a href="https://haadthipo365.sharepoint.com/sites/RMCGConnect/_layouts/15/news.aspx" target="_top" class="btn-read-more">อ่านข้อมูลเพิ่มเติม</a>
   </div>
 
+  <script>
+    // ลิงก์ CSV จาก Google Sheets ที่คุณให้มาครับ
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYZfsagskBSdwHS9SFY2GCHWC7hzjOrYMyjuWxFf3notXgOXf_ERh54qBQGTfQPmwPb5ZHkwiFLT6r/pub?output=csv';
+
+    async function loadNews() {
+      try {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        const rows = data.split('\n').filter(row => row.trim() !== '').slice(1);
+        
+        const container = document.getElementById('news-container');
+        document.getElementById('loading').style.display = 'none';
+        
+        rows.forEach(row => {
+          // แยกข้อมูลโดยรองรับกรณีมีเครื่องหมายคอมมาในข้อความ
+          const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+          
+          if (cols.length >= 4) {
+            const title = cols[0].replace(/"/g, '').trim();
+            const date = cols[1].replace(/"/g, '').trim();
+            const img = cols[2].replace(/"/g, '').trim();
+            const link = cols[3].replace(/"/g, '').trim();
+
+            const cardHtml = `
+              <a href="${link}" target="_top" class="news-card">
+                <div class="news-image-wrapper">
+                  <img src="${img}" class="news-image" alt="${title}" onerror="this.src='https://via.placeholder.com/400x300?text=News+Image'">
+                  <div class="news-date">${date}</div>
+                </div>
+                <h3 class="news-title">${title}</h3>
+              </a>
+            `;
+            container.innerHTML += cardHtml;
+          }
+        });
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('loading').innerText = 'ไม่สามารถดึงข้อมูลข่าวสารได้';
+      }
+    }
+
+    loadNews();
+  </script>
 </body>
 </html>
