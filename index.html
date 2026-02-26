@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dynamic News Feed Grid</title>
+<title>Dynamic News Feed - New Tab Version</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   body {
@@ -16,7 +16,6 @@
   .section-header { text-align: center; margin-bottom: 40px; }
   .section-title { font-size: 26px; font-weight: 700; color: #333; margin: 0; }
 
-  /* เลย์เอาต์แบบ 4 คอลัมน์ */
   .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -102,11 +101,11 @@
   <div class="news-grid" id="news-container"></div>
 
   <div class="button-container">
-    <a href="https://haadthipo365.sharepoint.com/sites/RMCGConnect/_layouts/15/news.aspx" target="_top" class="btn-read-more">อ่านข้อมูลเพิ่มเติม</a>
+    <a href="https://haadthipo365.sharepoint.com/sites/RMCGConnect/_layouts/15/news.aspx" target="_blank" rel="noopener noreferrer" class="btn-read-more">อ่านข้อมูลเพิ่มเติม</a>
   </div>
 
   <script>
-    // ลิงก์ CSV จาก Google Sheets ที่คุณให้มาครับ
+    // ลิงก์ Google Sheets ของคุณ
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYZfsagskBSdwHS9SFY2GCHWC7hzjOrYMyjuWxFf3notXgOXf_ERh54qBQGTfQPmwPb5ZHkwiFLT6r/pub?output=csv';
 
     async function loadNews() {
@@ -119,7 +118,6 @@
         document.getElementById('loading').style.display = 'none';
         
         rows.forEach(row => {
-          // แยกข้อมูลโดยรองรับกรณีมีเครื่องหมายคอมมาในข้อความ
           const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
           
           if (cols.length >= 4) {
@@ -129,7 +127,7 @@
             const link = cols[3].replace(/"/g, '').trim();
 
             const cardHtml = `
-              <a href="${link}" target="_top" class="news-card">
+              <a href="${link}" target="_blank" rel="noopener noreferrer" class="news-card">
                 <div class="news-image-wrapper">
                   <img src="${img}" class="news-image" alt="${title}" onerror="this.src='https://via.placeholder.com/400x300?text=News+Image'">
                   <div class="news-date">${date}</div>
