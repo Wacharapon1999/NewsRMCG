@@ -74,9 +74,11 @@
   .news-card:hover .news-title { color: #0b7a42; }
 
   .button-container { text-align: center; margin-top: 40px; }
+  
+  /* ตกแต่งปุ่มอ่านเพิ่มเติมให้ดูเป็นสไตล์ HaadThip CI */
   .btn-read-more {
     display: inline-block;
-    background: linear-gradient(to right, #6ab023, #0b7a42);
+    background: linear-gradient(to right, #007947, #0b7a42); /* ปรับสีเขียว CI */
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -86,7 +88,12 @@
     box-shadow: 0 4px 12px rgba(11, 122, 66, 0.3);
     transition: all 0.2s;
   }
-  .btn-read-more:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(11, 122, 66, 0.4); }
+  .btn-read-more:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 16px rgba(11, 122, 66, 0.4);
+    color: #ffffff;
+    opacity: 0.9;
+  }
 
   #loading { text-align: center; font-size: 18px; color: #666; padding: 50px; }
 </style>
@@ -101,18 +108,22 @@
   <div class="news-grid" id="news-container"></div>
 
   <div class="button-container">
-    <a href="https://haadthipo365.sharepoint.com/:u:/s/RMCGConnect/IQDWKo9htLfiSbzopTE6OlnOAWVo-gOC_-uwCv5CNTrP2cs?e=SWlF8A">อ่านข้อมูลเพิ่มเติม</a>
+    <a href="https://haadthipo365.sharepoint.com/:u:/s/RMCGConnect/IQDWKo9htLfiSbzopTE6OlnOAWVo-gOC_-uwCv5CNTrP2cs?e=SWlF8A" 
+       class="btn-read-more" 
+       target="_blank" 
+       rel="noopener noreferrer">อ่านข้อมูลเพิ่มเติม</a>
   </div>
 
   <script>
-    // ลิงก์ Google Sheets ของคุณ
+    // ลิงก์ Google Sheets ของคุณ Games
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYZfsagskBSdwHS9SFY2GCHWC7hzjOrYMyjuWxFf3notXgOXf_ERh54qBQGTfQPmwPb5ZHkwiFLT6r/pub?output=csv';
 
     async function loadNews() {
       try {
         const response = await fetch(csvUrl);
         const data = await response.text();
-        const rows = data.split('\n').filter(row => row.trim() !== '').slice(1);
+        // แก้ไขการแยกแถวให้เสถียรขึ้น
+        const rows = data.split(/\r?\n/).filter(row => row.trim() !== '').slice(1);
         
         const container = document.getElementById('news-container');
         document.getElementById('loading').style.display = 'none';
@@ -148,6 +159,3 @@
   </script>
 </body>
 </html>
-
-
-
